@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   roscpp
   sensor_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,6 +58,10 @@ find_package(catkin REQUIRED COMPONENTS
 #   Service1.srv
 #   Service2.srv
 # )
+add_service_files(
+  FILES
+  Navigator.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -70,6 +75,11 @@ find_package(catkin REQUIRED COMPONENTS
 #   DEPENDENCIES
 #   geometry_msgs#   nav_msgs#   sensor_msgs
 # )
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -191,3 +201,14 @@ include_directories(
 
 add_executable(path src/path.cpp)
 target_link_libraries(path ${catkin_LIBRARIES})
+
+add_executable(navigation src/navigation.cpp)
+add_executable(testingNav src/testingNav.cpp)
+
+target_link_libraries(navigation
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(testingNav
+  ${catkin_LIBRARIES}
+)
