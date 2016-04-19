@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_service_files(
     FILES
     path_ser.srv
+    Navigator.srv
  )
 
 ## Generate actions in the 'action' folder
@@ -196,3 +197,13 @@ target_link_libraries(path ${catkin_LIBRARIES})
 
 add_executable(path_client_demo src/path_client_demo.cpp)
 target_link_libraries(path_client_demo ${catkin_LIBRARIES})
+
+add_executable(navigation src/navigation.cpp)
+add_executable(testingNav src/testingNav.cpp)
+target_link_libraries(navigation
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(testingNav
+  ${catkin_LIBRARIES}
+)
