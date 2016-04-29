@@ -1,3 +1,4 @@
-geometry_msgs/Pose pose
+geometry_msgs/Pose init_pose
+geometry_msgs/Pose goal_pose
 ---
 nav_msgs/Path path

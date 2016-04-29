@@ -8,8 +8,10 @@ int main(int argc,char **argv) {
 	ros::NodeHandle nh;
 	ros::ServiceClient client = nh.serviceClient<finalproject::path_ser>("path_plan_service");
     finalproject::path_ser srv;
-    srv.request.pose.position.x = 11.5;
-    srv.request.pose.position.y = 11.5;
+    srv.request.init_pose.position.x = 5;
+    srv.request.init_pose.position.y = 6;
+    srv.request.goal_pose.position.x = 2;
+    srv.request.goal_pose.position.y = 3;
     if (client.call(srv))
     {
     	for(int i = 0; i < srv.response.path.poses.size(); i++)
@@ -19,7 +21,12 @@ int main(int argc,char **argv) {
     }
     else
     {
-      ROS_ERROR("Failed to call service add_two_ints");
+    	ROS_INFO_STREAM("Length: "<<srv.response.path.poses.size());
+    	for(int i = 0; i < srv.response.path.poses.size(); i++)
+    	{
+    		ROS_INFO_STREAM("Waypoint "<<i<<" : ("<< srv.response.path.poses[i].pose.position.x<<", "<< srv.response.path.poses[i].pose.position.y<<" )");
+    	}
+      ROS_ERROR("Failed to call service");
       return 1;
     }
   

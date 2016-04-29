@@ -119,29 +119,74 @@ std::vector<vertex> dijkstra(int init, int goal)
 
 }
 
-bool path_plan_service(finalproject::path_ser::Request & req, finalproject::path_ser::Response & res)
-//bool path_plan_service(int & req, bool & res)
+
+int cellIdxOfpoint(double x, double y)
 {
-	double x = req.pose.position.x;
-	// find the closest cell
-	int vtxInit = -1;
+	int vtxIdx = -1;
 	double min_dist = 100000000;
 	for(int i = 0; i < vertices_num; i++)
 	{
-		double dist = std::abs(req.pose.position.x - centers_pos[i].x) + std::abs(req.pose.position.y - centers_pos[i].y);
-		ROS_INFO_STREAM("dist: " << dist<<" min_dist:" << min_dist);
-		if(min_dist > dist)
+		//double dist = std::abs(req.pose.position.x - centers_pos[i].x) + std::abs(req.pose.position.y - centers_pos[i].y);
+		//ROS_INFO_STREAM("dist: " << dist<<" min_dist:" << min_dist);
+		//if(min_dist > dist)
+		//{
+		//	vtxInit = i;
+		//	min_dist = dist;
+		//}
+		if(std::abs(x - centers_pos[i].x)<=0.5 && std::abs(y - centers_pos[i].y)<=0.5)
 		{
-			vtxInit = i;
-			min_dist = dist;
+			vtxIdx = i;
+			break;
 		}
 
+
+		//0.5
+
 	}
-	ROS_INFO_STREAM("X: " <<req.pose.position.x<<" Y:" << req.pose.position.y << "closest: "<< vtxInit);
+	ROS_INFO_STREAM("X: " <<x<<" Y:" << y << "closest: "<< vtxIdx);
+	return vtxIdx;
+}
+
+bool path_plan_service(finalproject::path_ser::Request & req, finalproject::path_ser::Response & res)
+//bool path_plan_service(int & req, bool & res)
+{
+	//double x = req.init_pose.position.x;
+	// find the closest cell
+	int vtxInit = cellIdxOfpoint(req.init_pose.position.x,req.init_pose.position.y);
+	int vtxGoal = cellIdxOfpoint(req.goal_pose.position.x,req.goal_pose.position.y);
+
+	if(vtxInit == -1)
+	{
+		geometry_msgs::PoseStamped posd = geometry_msgs::PoseStamped();
+		posd.pose.position.x = -1001;// = req.pose;
+		posd.pose.position.y = -1001;
+		res.path.poses.push_back(posd);
+		return true;
+	}
+
+	if(vtxGoal == -1)
+	{
+		geometry_msgs::PoseStamped posd = geometry_msgs::PoseStamped();
+		posd.pose.position.x = -1002;// = req.pose;
+		posd.pose.position.y = -1002;
+		res.path.poses.push_back(posd);
+		return true;
+	}
+
+	if(vtxInit == vtxGoal)
+	{
+		geometry_msgs::PoseStamped posd = geometry_msgs::PoseStamped();
+		posd.pose.position.x = -1003;// = req.pose;
+		posd.pose.position.y = -1003;
+		res.path.poses.push_back(posd);
+		return true;
+	}
+
+	
 	geometry_msgs::PoseStamped initPsd = geometry_msgs::PoseStamped();
-	initPsd.pose = req.pose;
+	initPsd.pose = req.init_pose;
 	res.path.poses.push_back(initPsd);
-	std::vector<vertex> path = dijkstra(vtxInit, 17);
+	std::vector<vertex> path = dijkstra(vtxInit, vtxGoal);
 	for(int i = path.size() -1; i >=0; i--)
 	{
 		
@@ -150,6 +195,10 @@ bool path_plan_service(finalproject::path_ser::Request & req, finalproject::path
 		posd.pose.position.y = centers_pos[path[i].index].y;
 		res.path.poses.push_back(posd);
 	}
+
+	geometry_msgs::PoseStamped goalPsd = geometry_msgs::PoseStamped();
+	goalPsd.pose = req.goal_pose;
+	res.path.poses.push_back(goalPsd);
 
 
 	return true;
@@ -168,7 +217,7 @@ int main(int argc,char **argv) {
 	myfile.close();*/
 
 	// read a text file
-	std::ifstream infile("graph_example.txt");
+	std::ifstream infile("adjacency.txt");
   	if(!infile.is_open())
 	{
     	ROS_INFO_STREAM("file not found!");
@@ -203,7 +252,7 @@ int main(int argc,char **argv) {
 	    if(line.find(":") != std::string::npos)
 	    {
 	    	ROS_INFO_STREAM("Has : inside");
-	    	if(line.find("centers") != std::string::npos)
+	    	if(line.find("center") != std::string::npos)
 	    	{
 				process_step = 2;
 				mtx_row = 0;
@@ -213,6 +262,7 @@ int main(int argc,char **argv) {
 	    	{
 	    		process_step = 1;
 	    		mtx_row = 0;
+	    		ROS_INFO_STREAM("Reading adjacency matrix...");
 	    		continue;
 	    	}
 	    }
@@ -243,12 +293,13 @@ int main(int argc,char **argv) {
 	    }
 
 	    //ROS_INFO_STREAM(process_step);
-	    ROS_INFO_STREAM((const char*)line.c_str());
+	   // ROS_INFO_STREAM((const char*)line.c_str());
 	    
 	    
-
+    
     // process pair (a,b)
 	}
+	ROS_INFO_STREAM("Ready to plan!");
 
 	ros::ServiceServer path_service = nh.advertiseService("path_plan_service", path_plan_service);
 
