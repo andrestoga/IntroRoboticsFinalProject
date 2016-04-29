@@ -21,11 +21,7 @@ int main(int argc,char **argv) {
     }
     else
     {
-    	ROS_INFO_STREAM("Length: "<<srv.response.path.poses.size());
-    	for(int i = 0; i < srv.response.path.poses.size(); i++)
-    	{
-    		ROS_INFO_STREAM("Waypoint "<<i<<" : ("<< srv.response.path.poses[i].pose.position.x<<", "<< srv.response.path.poses[i].pose.position.y<<" )");
-    	}
+    	
       ROS_ERROR("Failed to call service");
       return 1;
     }
