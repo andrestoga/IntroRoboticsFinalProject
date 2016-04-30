@@ -57,6 +57,7 @@ find_package(catkin REQUIRED COMPONENTS
     FILES
     path_ser.srv
     Navigator.srv
+    PositionRobot.srv
  )
 
 ## Generate actions in the 'action' folder

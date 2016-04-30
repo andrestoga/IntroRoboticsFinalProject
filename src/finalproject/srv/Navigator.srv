@@ -1,3 +1,6 @@
 geometry_msgs/Point point
 ---
-std_msgs/Bool isSuccess
+uint8 info
+# 0 = failed to reach the goal
+# 1 = localizing
+# 2 = goal reached
