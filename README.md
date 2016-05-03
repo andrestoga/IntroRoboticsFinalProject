@@ -39,6 +39,8 @@ rosrun finalproject navigation
 
 rosrun finalproject testingNav
 
+//******Extra: If you want to use the same configuration that I'm using for the particle filter the file is located in IntroRoboticsFinalProject/src/finalproject/src/amcl.launch
+
 //******Extra: To correctly kill Gazebo if you want to restart the simulation
 
 killall -9 gzserver
