@@ -1,5 +1,10 @@
 # IntroRoboticsFinalProject
-Important******: Before beginning rename the files navigation (copy).cpp to navigation.cpp and testingNav (copy).cpp to testingNav.cpp
+Important******: Before beginning rename the files navigation (copy).cpp to navigation.cpp and testingNav (copy).cpp to testingNav.cpp --> Delete this comment after submission.
+
+Team members
+Andres Torres Garcia
+Guoxiang Zhang
+Jasmit Kakkar
 
 Execute this commands in order
 
@@ -31,11 +36,11 @@ rviz
 
 rosrun finalproject path
 
-8.- Run the navigation node and wait until the robot is localized
+8.- Run the navigation node and wait until the robot is localized.
 
 rosrun finalproject navigation
 
-//******Note: If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane.
+//******Note: If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane and compile it again: catkin_make. The closes free point to the goal(0,0) is .75 and .75 so, if you want to plan to that goal please use the point (.75, .75)
 
 9.- Run the testingNav node
 
@@ -46,3 +51,8 @@ rosrun finalproject testingNav
 //******Extra: To correctly kill Gazebo if you want to restart the simulation
 
 killall -9 gzserver
+
+Submit the whole folder including the package finalproject. In addition, provide a textual description explaining which questions you solved and how. Moreover, provide clear explanations on how to run your code. One submission per group is sufficient, as long as all team members are clearly identified in the submission.
+
+Andres Torres Garcia
+I solved question 5 using a server and a client for the navigation. When the server navigation is up and running it won't receive any request for going to a particular waypoint until the robot get localized. The robot will turn in place to get localized. Once the robot is localized, the client will send the first waypoint of the path to follow to the goal. If it succed it will send the next waypoint and so on until the last waypoint, which is the goal, is sent. If for a particular reason there is an obstacle thorugh the path, the robot will try a number of times to reach the goal. If it fails it will move to the next goal and so on. If for a particular reason the robot gets lost during the navigation it will replan again.
