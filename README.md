@@ -35,6 +35,8 @@ rosrun finalproject path
 
 rosrun finalproject navigation
 
+//******Note: If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane.
+
 9.- Run the testingNav node
 
 rosrun finalproject testingNav
