@@ -1,8 +1,11 @@
 # IntroRoboticsFinalProject
 
 Team members
+
 Andres Torres Garcia
+
 Guoxiang Zhang
+
 Jasmit Kakkar
 
 Execute this commands in order
