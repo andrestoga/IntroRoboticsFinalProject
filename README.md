@@ -31,21 +31,21 @@ roslaunch run_full_simulation.launch
 
 rviz
 
-6.5 - Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
+7. - Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
 
 rosrun finalproject map
 
-7.- Run the path node
+8.- Run the path node
 
 rosrun finalproject path
 
-8.- Run the navigation node and wait until the robot is localized.
+9.- Run the navigation node and wait until the robot is localized.
 
 rosrun finalproject navigation
 
 //******Note: If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane and compile it again: catkin_make. The closes free point to the goal(0,0) is .75 and .75 so, if you want to plan to that goal please use the point (.75, .75)
 
-9.- Run the testingNav node
+10.- Run the testingNav node
 
 rosrun finalproject testingNav
 
