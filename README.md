@@ -34,7 +34,7 @@ roslaunch robotics_course run_full_simulation.launch
 
 rviz
 
-7. - Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
+7.- Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
 
 rosrun finalproject map
 
