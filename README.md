@@ -32,6 +32,10 @@ roslaunch run_full_simulation.launch
 
 rviz
 
+6.5 - Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
+
+rosrun finalproject map
+
 7.- Run the path node
 
 rosrun finalproject path
