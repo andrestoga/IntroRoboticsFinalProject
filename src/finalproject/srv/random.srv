@@ -1,0 +1,5 @@
+float32 time
+float32 rotation
+uint8 isRotation
+---
+uint8 useless
