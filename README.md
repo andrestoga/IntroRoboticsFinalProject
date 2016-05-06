@@ -1,5 +1,4 @@
 # IntroRoboticsFinalProject
-Important******: Before beginning rename the files navigation (copy).cpp to navigation.cpp and testingNav (copy).cpp to testingNav.cpp --> Delete this comment after submission.
 
 Team members
 Andres Torres Garcia
