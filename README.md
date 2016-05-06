@@ -8,7 +8,7 @@ Team members
 
   *Jasmit Kakkar
 
-Execute this commands in order
+Execute this commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
 
 1.- Run ros master
 
