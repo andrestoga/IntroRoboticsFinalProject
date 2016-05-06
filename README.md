@@ -1,12 +1,29 @@
 # IntroRoboticsFinalProject
 
-Team members
+### Team members
 
-  *Andres Torres Garcia
-
-  *Guoxiang Zhang
-
-  *Jasmit Kakkar
+  * Andres Torres Garcia
+  * Guoxiang Zhang
+  * Jasmit Kakkar
+### How to run
+* 1.- Run ros master
+   ```
+   roscore
+   ```
+* Set the sim time to true
+```
+rosparam set use_sim_time true
+```
+* Run here ~/CSE180/src/robotics_course/urdfs
+```
+rosrun gazebo_ros  gazebo factory_wo_p3at.sdf
+```
+* Run here ~/CSE180/src/robotics_course/urdfs
+* Run here ~/CSE180/src/robotics_course/launch_files
+* Run rviz if you want to see the particle filter with the map
+* Run the map node, this will create adjacency.txt which includes the # of vertices their centers and an adjacency matrix
+* Run the path node
+* Run the navigation node and wait until the robot is localized.
 
 Execute this commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
 
