@@ -2,11 +2,11 @@
 
 Team members
 
-  Andres Torres Garcia
+  *Andres Torres Garcia
 
-  Guoxiang Zhang
+  *Guoxiang Zhang
 
-  Jasmit Kakkar
+  *Jasmit Kakkar
 
 Execute this commands in order
 
