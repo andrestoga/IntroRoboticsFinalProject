@@ -6,6 +6,7 @@
 #include "geometry_msgs/Pose.h"
 #include "finalproject/Navigator.h"
 #include "finalproject/PositionRobot.h"
+#include "finalproject/random.h"
 #include "std_msgs/Bool.h"
 #include <tf/tf.h>
 
@@ -66,6 +67,8 @@ int isObstacle = 0;
 
 int firstLocalization = 1;
 
+int justOnceCircleLoca = 1;
+
 float Calculate_Rotation_Angle(geometry_msgs::Vector3 unitVectorRobot, geometry_msgs::Vector3 unitVectorDirection);
 void move(double speed, double distance, int isForward);
 bool navigation(finalproject::Navigator::Request  &req,
@@ -83,6 +86,7 @@ void callback(const geometry_msgs::PoseWithCovarianceStampedConstPtr& pos_cov, c
 void MoveSlowly(float t, int direction);
 void Wait(float t);
 void moveRandomly();
+bool moveRandomlyTime(finalproject::random::Request  &req, finalproject::random::Response &res);
 
 int main(int argc,char **argv)
 {
@@ -131,6 +135,8 @@ int main(int argc,char **argv)
 
 	ros::ServiceServer service = nh.advertiseService("navigation_server", navigation);
 	ros::ServiceServer service_position = nh.advertiseService("PositionRobot", positionRobot);
+	ros::ServiceServer service_random = nh.advertiseService("random", moveRandomlyTime);
+
 	ROS_INFO("Navigating randomly");
 
 	ros::Rate loop_rate(10);
@@ -144,36 +150,46 @@ int main(int argc,char **argv)
   			//dir = 1 counter clockwise, dir = 0 clockwise
 			rotate( degrees2radians(3), degrees2radians(rand() % RANDOM_ANGLES_RANGE + MIN_ROT_ANGLE), 0);
   		}*/
-  		if (1 == global_state)//Forward until reach and obstacle = 2
+  		if (1 == global_state && !wrongLocalization)//Forward until reach and obstacle = 2
   		{
 			// vel_Pub.publish(msgFor);
 
 			if ( justLocalized )
 			{
 				justLocalized = 0;
+  				justOnceCircleLoca = 0;
 				ROS_INFO("Robot Localized");
 			}
   		}
-  		else if (0 == global_state)
+  		else if (0 == global_state || wrongLocalization)
   		{
 			justLocalized = 1;
 
   			ROS_INFO("Trying to localize the robot.");
 
-  			rotate( degrees2radians(ROTATE_SPEED_DEG_PS_LOC), degrees2radians(rand() % RANDOM_ANGLES_RANGE + MIN_ROT_ANGLE), 1);
+  			// MoveSlowly(1.0, 0);
+  			// MoveSlowly(1.0, 1);
 
-  			// moveRandomly();
+  			if (justOnceCircleLoca)
+  			{
+  				rotate( degrees2radians(ROTATE_SPEED_DEG_PS_LOC), degrees2radians(rand() % RANDOM_ANGLES_RANGE + MIN_ROT_ANGLE), 1);
+  			}
+  			else
+  			{
+  				moveRandomly();
+  			}
 
-  	// 		if (toggleDir)
-  	// 		{
-  	// 			MoveSlowly(1.0, toggleDir);
-  	// 			toggleDir = 0;
-  	// 		}
-  	// 		else
-  	// 		{
-  	// 			MoveSlowly(1.0, toggleDir);
-  	// 			toggleDir = 1;
-  	// 		}
+
+  			// if (toggleDir)
+  			// {
+  			// 	MoveSlowly(1.0, toggleDir);
+  			// 	toggleDir = 0;
+  			// }
+  			// else
+  			// {
+  			// 	MoveSlowly(1.0, toggleDir);
+  			// 	toggleDir = 1;
+  			// }
 
 			// // MoveSlowly(1.0);
 			// Wait(3.0);
@@ -190,6 +206,11 @@ int main(int argc,char **argv)
 			// vel_Pub.publish(msgRot);
 
   		}
+  		// else if (1 == wrongLocalization)
+  		// {
+  		// 	moveRandomly();
+  		// }
+
 
  //  		ROS_INFO("Global state: %d", global_state);
 
@@ -218,7 +239,7 @@ void moveRandomly()
 			vel_Pub.publish(msgFor);
 		}
 
-		if (1 == global_state)
+		if (1 == global_state && !wrongLocalization)
 		{
 			stop();
 			break;
@@ -227,6 +248,55 @@ void moveRandomly()
 		ros::spinOnce();
 		loop_rate.sleep();
 	}
+}
+
+bool moveRandomlyTime(finalproject::random::Request  &req, finalproject::random::Response &res)
+{
+
+	if (req.isRotation)
+	{
+		ROS_INFO("Checking the goal");
+		rotate( degrees2radians(ROTATE_SPEED_DEG_PS_LOC), degrees2radians(360), 1);
+
+		res.useless = global_state;
+	}
+	else
+	{
+		ROS_INFO("Moving randomly for %f", req.time);
+
+		geometry_msgs::Twist msgFor;
+		//Assigning the linear and angular velocities.
+		msgFor.linear.x = FORWARD_SPEED_M_PS_LOC;
+		msgFor.angular.z = 0;
+
+		ros::Rate loop_rate(10);
+
+		double tt1 = 0.0;
+		double tt2 = 0.0;
+
+		tt1 = ros::Time::now().toSec();
+
+		while ((tt2 - tt1) < req.time)
+		{
+			if (1 == isObstacle)
+			{
+				rotate( degrees2radians(ROTATE_SPEED_DEG_PS_LOC), degrees2radians(rand() % RANDOM_ANGLES_RANGE + MIN_ROT_ANGLE), 1);
+			}
+			else
+			{
+				vel_Pub.publish(msgFor);
+			}
+
+	  		ros::spinOnce();
+	  		tt2 = ros::Time::now().toSec();
+	  	}
+	}
+
+	
+
+  	res.useless = 1;
+
+  	return true;
 }
 
 void callback(const geometry_msgs::PoseWithCovarianceStampedConstPtr& pos_cov, const geometry_msgs::PoseConstPtr& pos_gaz)
@@ -292,7 +362,7 @@ void pose_amcl_MessageReceived(const geometry_msgs::PoseWithCovarianceStamped::C
 	{*/
 		// ROS_INFO("AMCL callback!!!!");
 
-		if ( volume < 0.1 && !wrongLocalization )
+		if ( volume < 0.1 )
 		{
 			position.position.x = msg->pose.pose.position.x;
 			position.position.y = msg->pose.pose.position.y;
@@ -559,7 +629,7 @@ bool navigation(finalproject::Navigator::Request  &req,
 	if ( -1001 == req.point.x)
 	{
 		wrongLocalization = 1;
-		global_state = 0;
+		// global_state = 0;
 	}
 	else
 	{
@@ -666,7 +736,7 @@ bool navigation(finalproject::Navigator::Request  &req,
 					// else
 					// {
 						wrongLocalization = 0;
-						ROS_INFO("Moving towards a waypoint,");
+						ROS_INFO("Moving towards a waypoint");
 
 						move(FORWARD_SPEED_ME_PS, distance, 1);
 
@@ -674,9 +744,11 @@ bool navigation(finalproject::Navigator::Request  &req,
 						{
 							//TODO: Count the number of attemps to reach the goal
 							ROS_INFO("Obstacle found during the path!!!");
-							res.info = 1;
 							// rotate( degrees2radians(ROTATE_SPEED_DEG_PS), degrees2radians(rand() % RANDOM_ANGLES_RANGE + MIN_ROT_ANGLE), 0;
 							// global_state = 0;
+
+							res.info = 1;
+
 						}
 						else
 						{
