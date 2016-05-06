@@ -5,15 +5,16 @@
   * Andres Torres Garcia
   * Guoxiang Zhang
   * Jasmit Kakkar
+
 ### How to run
 * 1.- Run ros master
-   ```
-   roscore
-   ```
+    ```
+    roscore
+    ```
 * Set the sim time to true
-```
-rosparam set use_sim_time true
-```
+    ```
+    rosparam set use_sim_time true
+    ```
 * Run here ~/CSE180/src/robotics_course/urdfs
 ```
 rosrun gazebo_ros  gazebo factory_wo_p3at.sdf
