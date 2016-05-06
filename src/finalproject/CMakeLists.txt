@@ -202,6 +202,10 @@ target_link_libraries(path_client_demo ${catkin_LIBRARIES})
 
 add_executable(navigation src/navigation.cpp)
 add_executable(testingNav src/testingNav.cpp)
+add_executable(map src/map.cpp)
+target_link_libraries(map
+  ${catkin_LIBRARIES}
+)
 target_link_libraries(navigation
   ${catkin_LIBRARIES}
 )
