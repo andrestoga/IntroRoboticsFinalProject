@@ -51,6 +51,7 @@
 
 If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane and compile it again: catkin_make. The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in previous lab. 
 
+## How did we slove those questions
 
 ### Andres Torres Garcia
 I solved question 5 using a server and a client for the navigation. When the server navigation is up and running it won't receive any request for going to a particular waypoint until the robot get localized. The robot will turn in place to get localized. Once the robot is localized, the client will send the first waypoint of the path to follow to the goal. If it succed it will send the next waypoint and so on until the last waypoint, which is the goal, is sent. If for a particular reason there is an obstacle thorugh the path, the robot will try a number of times to reach the goal. If it fails it will move to the next goal and so on. If for a particular reason the robot gets lost during the navigation it will replan again.
