@@ -57,6 +57,9 @@ rosrun gazebo_ros spawn_model -file p3at_amr.urdf -urdf -z 1  -x 0 -y 0 -model p
    rosrun finalproject testingNav
 ```
 
+Extra: If you want to use the same configuration that I'm using for the particle filter the file is located in
+finalproject/src/amcl.launch
+
 ## How did we slove those questions
 
 ### Andres Torres Garcia
