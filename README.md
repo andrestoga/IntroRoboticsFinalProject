@@ -63,9 +63,9 @@ I solved question 5 using a server and a client for the navigation. When the ser
 
 ### Guoxiang Zhang
 
-#### Q3:Write a planner
+#### Q3: Write a planner
 
-Dijkstra isused to find the shortest path in the graph. 
+Dijkstra is used to find the shortest path in the graph. 
 
 First, my code reads the adjacency matrix along with coordinates of the vertices from text file generated from Q2
 
