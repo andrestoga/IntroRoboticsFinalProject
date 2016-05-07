@@ -6,6 +6,12 @@
   * Guoxiang Zhang
   * Jasmit Kakkar
 
+### How to change goal location
+
+Change GOAL_X and GOAL_Y in  finalproject/src/testNav.cpp (on the top of this file). 
+
+The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in lab6. 
+
 ### How to run
 
 Execute following commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
@@ -50,11 +56,6 @@ rosrun gazebo_ros spawn_model -file p3at_amr.urdf -urdf -z 1  -x 0 -y 0 -model p
 ```
    rosrun finalproject testingNav
 ```
-### How to change goal location
-
-Change GOAL_X and GOAL_Y in  finalproject/src/testNav.cpp (on the top of this file). 
-
-The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in lab6. 
 
 ## How did we slove those questions
 
