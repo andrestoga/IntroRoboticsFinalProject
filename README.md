@@ -24,7 +24,7 @@ Execute following commands in order. If you have the simulator, the robot model 
 ```
 * 4 Run here ~/CSE180/src/robotics_course/urdfs
 ```
-   rosrun gazebo_ros spawn_model -file p3at_amr.urdf -urdf -z 1  -x 0 -y 0 -model pioneer3at
+rosrun gazebo_ros spawn_model -file p3at_amr.urdf -urdf -z 1  -x 0 -y 0 -model pioneer3at
 ```
 * 5 Run here ~/CSE180/src/robotics_course/launch_files
 ```
