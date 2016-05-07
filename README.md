@@ -64,7 +64,7 @@ finalproject/src/amcl.launch
 
 We store the graph as adjacency matrix. We also stored positions of those vertices. For example:
 ```
-vertices: 27
+vertices: 2
 adjacency matrix:
 0 1
 1 0
