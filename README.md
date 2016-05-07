@@ -49,7 +49,9 @@
 ```
 ### How to change goal location
 
-If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane and compile it again: catkin_make. The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in previous lab. 
+Change GOAL_X and GOAL_Y in  finalproject/src/testNav.cpp (on the top of this file). 
+
+The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in lab6. 
 
 ## How did we slove those questions
 
@@ -137,4 +139,7 @@ rosrun finalproject testingNav
 killall -9 gzserver
 
 Submit the whole folder including the package finalproject. In addition, provide a textual description explaining which questions you solved and how. Moreover, provide clear explanations on how to run your code. One submission per group is sufficient, as long as all team members are clearly identified in the submission.
+
+
+If you want to change the goal for the robot locate the defines that are located in the source file IntroRoboticsFinalProject/src/finalproject/src/testNav.cpp. The names of the defines are GOAL_X for the x coordinate and GOAL_Y for the y coordinate on the plane and compile it again: catkin_make. The closes free point to the goal(0,0) is .75 and .75, but in the simulator it is out side the room, so we use (3,3) as our default goal as we did in previous lab. 
 
