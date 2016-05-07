@@ -60,6 +60,19 @@ rosrun gazebo_ros spawn_model -file p3at_amr.urdf -urdf -z 1  -x 0 -y 0 -model p
 Extra: If you want to use the same configuration that I'm using for the particle filter the file is located in
 finalproject/src/amcl.launch
 
+## What is inside the text file
+
+We store the graph as adjacency matrix. We also stored positions of those vertices. For example:
+```
+vertices: 27
+adjacency matrix:
+0 1
+1 0
+center:
+1.0,2
+1.5,2
+```
+
 ## How did we slove those questions
 
 ### Andres Torres Garcia
