@@ -14,7 +14,7 @@ The closes free point to the goal(0,0) is .75 and .75, but in the simulator it i
 
 ### How to run
 
-Execute following commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
+Execute following commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 7.
 
 * 1 Run ros master
 ```
