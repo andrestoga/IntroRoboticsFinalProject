@@ -75,10 +75,7 @@ center:
 
 ## How did we slove those questions
 
-### Andres Torres Garcia
-I solved question 5 using a server and a client for the navigation. When the server navigation is up and running it won't receive any request for going to a particular waypoint until the robot get localized. The robot will turn in place to get localized. Once the robot is localized, the client will send the first waypoint of the path to follow to the goal. If it succed it will send the next waypoint and so on until the last waypoint, which is the goal, is sent. If for a particular reason there is an obstacle thorugh the path, the robot will try a number of times to reach the goal. If it fails it will move to the next goal and so on. If for a particular reason the robot gets lost during the navigation it will replan again.
-
-##Jasmit Kakkar
+### Jasmit Kakkar (Q1-Q2)
 To solve question 1 and 2 we had to first subscribe to the map metadata and retrieve the array of cells. Once we had the map i converted it into a 2d array of structs that contained its value its center and a number associated it with which free cell it was on the graph. I then called a function that partitioned a point in the 2d array as a 10x10 block and took the necessary value. If they were all free, the whole thing was free. If one node was unknown or occupied the whole node was. With this information i could easily make an adjacency matrix for each vertex of the graph and write it to a file, i also included the number of vertices and their respective x and y corrdinates. 
 
 ### Guoxiang Zhang
@@ -100,6 +97,8 @@ I implemented a service which can take a init pose and a goal pose as input, the
 
 Inside this service, it will find init and goal cell based on init and goal pose. Then use the corresponding vertices to get a path from Dijkstra. Then find corresponding centers of those vertices on the path. Then push those centers to a nav_msgs/Path then return it.
 
+### Andres Torres Garcia (Q5)
+I solved question 5 using a server and a client for the navigation. When the server navigation is up and running it won't receive any request for going to a particular waypoint until the robot get localized. The robot will turn in place to get localized. Once the robot is localized, the client will send the first waypoint of the path to follow to the goal. If it succed it will send the next waypoint and so on until the last waypoint, which is the goal, is sent. If for a particular reason there is an obstacle thorugh the path, the robot will try a number of times to reach the goal. If it fails it will move to the next goal and so on. If for a particular reason the robot gets lost during the navigation it will replan again.
 
 
 
