@@ -8,7 +8,7 @@
 
 ### How to run
 
-Execute this commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
+Execute following commands in order. If you have the simulator, the robot model and the particle filter set and running, you can skip to step 6.
 
 * 1 Run ros master
 ```
@@ -38,7 +38,7 @@ Execute this commands in order. If you have the simulator, the robot model and t
 ```
    rosrun finalproject map
 ```
-* 8 Run the path node
+* 8 Run the path planning node
 ```
    rosrun finalproject path
 ```
@@ -65,9 +65,9 @@ I solved question 5 using a server and a client for the navigation. When the ser
 
 #### Q3:Write a planner
 
-I am using Dijkstra to find a path in the graph. 
+Dijkstra isused to find the shortest path in the graph. 
 
-First, my code read the adjacency matrix along with coordinates of the vertices from text file generated from Q2
+First, my code reads the adjacency matrix along with coordinates of the vertices from text file generated from Q2
 
 Then std::priority_queue is used to find the path. Since in Dijkstra, the priority of a node would change, but std::priority_queue
 do not provide a interface to change priority. I choose to keep a flag for each node: visited or not. When change of priority happen,
